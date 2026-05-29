@@ -30,6 +30,15 @@ def write_word_counts(file_path, word_counts):
             result_file.write(f"{word}-{count}\n")
 
 
+def process_text_file(input_path, output_path, limit=10):
+    """Process a text file and save the most common words."""
+    text = read_text_file(input_path)
+    words = extract_words(text)
+    top_words = get_top_words(words, limit)
+    write_word_counts(output_path, top_words)
+    return top_words
+
+
 def main():
     """Run the command-line interface."""
     pass

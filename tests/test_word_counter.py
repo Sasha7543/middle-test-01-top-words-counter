@@ -5,6 +5,7 @@ import pytest
 from word_counter import (
     extract_words,
     get_top_words,
+    process_text_file,
     read_text_file,
     write_word_counts,
 )
@@ -61,3 +62,17 @@ def test_write_word_counts_creates_result_file(tmp_path):
     write_word_counts(result_file, [("python", 3), ("test", 2)])
 
     assert result_file.read_text(encoding="utf-8") == "python-3\ntest-2\n"
+
+
+def test_process_text_file_saves_top_words(tmp_path):
+    input_file = tmp_path / "input.txt"
+    output_file = tmp_path / "output.txt"
+    input_file.write_text(
+        "Python test python code. Code review test python.",
+        encoding="utf-8",
+    )
+
+    result = process_text_file(input_file, output_file, limit=2)
+
+    assert result == [("python", 3), ("test", 2)]
+    assert output_file.read_text(encoding="utf-8") == "python-3\ntest-2\n"
