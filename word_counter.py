@@ -1,5 +1,6 @@
 """Utilities and CLI for finding the most common words in a text file."""
 
+from collections import Counter
 import re
 
 
@@ -15,6 +16,11 @@ def read_text_file(file_path):
 def extract_words(text):
     """Return normalized words from text."""
     return re.findall(r"[^\W\d_]+(?:['’-][^\W\d_]+)?", text.lower())
+
+
+def get_top_words(words, limit=10):
+    """Return the most common words and their counts."""
+    return Counter(words).most_common(limit)
 
 
 def main():

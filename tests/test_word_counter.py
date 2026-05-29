@@ -2,7 +2,7 @@
 
 import pytest
 
-from word_counter import extract_words, read_text_file
+from word_counter import extract_words, get_top_words, read_text_file
 
 
 @pytest.fixture
@@ -37,3 +37,15 @@ def test_read_text_file_rejects_non_txt_file(tmp_path):
 )
 def test_extract_words_returns_normalized_words(text, expected):
     assert extract_words(text) == expected
+
+
+@pytest.mark.parametrize(
+    ("words", "limit", "expected"),
+    [
+        (["a", "b", "a", "c", "b", "a"], 10, [("a", 3), ("b", 2), ("c", 1)]),
+        (["one", "two", "one", "three"], 2, [("one", 2), ("two", 1)]),
+        ([], 10, []),
+    ],
+)
+def test_get_top_words_returns_limited_counts(words, limit, expected):
+    assert get_top_words(words, limit) == expected
