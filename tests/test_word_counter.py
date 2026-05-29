@@ -2,7 +2,12 @@
 
 import pytest
 
-from word_counter import extract_words, get_top_words, read_text_file
+from word_counter import (
+    extract_words,
+    get_top_words,
+    read_text_file,
+    write_word_counts,
+)
 
 
 @pytest.fixture
@@ -49,3 +54,10 @@ def test_extract_words_returns_normalized_words(text, expected):
 )
 def test_get_top_words_returns_limited_counts(words, limit, expected):
     assert get_top_words(words, limit) == expected
+
+
+def test_write_word_counts_creates_result_file(tmp_path):
+    result_file = tmp_path / "result.txt"
+    write_word_counts(result_file, [("python", 3), ("test", 2)])
+
+    assert result_file.read_text(encoding="utf-8") == "python-3\ntest-2\n"

@@ -23,6 +23,13 @@ def get_top_words(words, limit=10):
     return Counter(words).most_common(limit)
 
 
+def write_word_counts(file_path, word_counts):
+    """Write word counts to a file in word-count format."""
+    with open(file_path, "w", encoding="utf-8") as result_file:
+        for word, count in word_counts:
+            result_file.write(f"{word}-{count}\n")
+
+
 def main():
     """Run the command-line interface."""
     pass
