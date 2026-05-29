@@ -15,7 +15,10 @@ from word_counter import (
 @pytest.fixture
 def sample_text_file(tmp_path):
     file_path = tmp_path / "sample.txt"
-    file_path.write_text("Python is simple. Python is powerful.", encoding="utf-8")
+    file_path.write_text(
+        "Python is simple. Python is powerful.",
+        encoding="utf-8",
+    )
     return file_path
 
 
@@ -38,7 +41,10 @@ def test_read_text_file_rejects_non_txt_file(tmp_path):
     [
         ("Hello, hello! WORLD.", ["hello", "hello", "world"]),
         ("Python 3.12 is cool", ["python", "is", "cool"]),
-        ("Привіт, світ! Привіт.", ["привіт", "світ", "привіт"]),
+        (
+            "Привіт, світ! Привіт.",
+            ["привіт", "світ", "привіт"],
+        ),
         ("don't stop", ["don't", "stop"]),
     ],
 )
