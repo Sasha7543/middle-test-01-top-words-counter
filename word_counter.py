@@ -1,5 +1,7 @@
 """Utilities and CLI for finding the most common words in a text file."""
 
+import re
+
 
 def read_text_file(file_path):
     """Read and return text from a .txt file."""
@@ -8,6 +10,11 @@ def read_text_file(file_path):
 
     with open(file_path, "r", encoding="utf-8") as text_file:
         return text_file.read()
+
+
+def extract_words(text):
+    """Return normalized words from text."""
+    return re.findall(r"[^\W\d_]+(?:['’-][^\W\d_]+)?", text.lower())
 
 
 def main():

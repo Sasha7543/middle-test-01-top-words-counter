@@ -2,7 +2,7 @@
 
 import pytest
 
-from word_counter import read_text_file
+from word_counter import extract_words, read_text_file
 
 
 @pytest.fixture
@@ -24,3 +24,16 @@ def test_read_text_file_rejects_non_txt_file(tmp_path):
 
     with pytest.raises(ValueError, match=".txt"):
         read_text_file(file_path)
+
+
+@pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        ("Hello, hello! WORLD.", ["hello", "hello", "world"]),
+        ("Python 3.12 is cool", ["python", "is", "cool"]),
+        ("Привіт, світ! Привіт.", ["привіт", "світ", "привіт"]),
+        ("don't stop", ["don't", "stop"]),
+    ],
+)
+def test_extract_words_returns_normalized_words(text, expected):
+    assert extract_words(text) == expected
