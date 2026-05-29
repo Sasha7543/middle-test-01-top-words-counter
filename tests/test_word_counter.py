@@ -5,6 +5,7 @@ import pytest
 from word_counter import (
     extract_words,
     get_top_words,
+    main,
     process_text_file,
     read_text_file,
     write_word_counts,
@@ -76,3 +77,13 @@ def test_process_text_file_saves_top_words(tmp_path):
 
     assert result == [("python", 3), ("test", 2)]
     assert output_file.read_text(encoding="utf-8") == "python-3\ntest-2\n"
+
+
+def test_main_processes_file_from_arguments(tmp_path):
+    input_file = tmp_path / "input.txt"
+    output_file = tmp_path / "output.txt"
+    input_file.write_text("one two two three three three", encoding="utf-8")
+
+    main([str(input_file), str(output_file), "--limit", "2"])
+
+    assert output_file.read_text(encoding="utf-8") == "three-3\ntwo-2\n"

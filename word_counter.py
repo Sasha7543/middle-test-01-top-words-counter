@@ -1,5 +1,6 @@
 """Utilities and CLI for finding the most common words in a text file."""
 
+import argparse
 from collections import Counter
 import re
 
@@ -39,9 +40,26 @@ def process_text_file(input_path, output_path, limit=10):
     return top_words
 
 
-def main():
+def main(args=None):
     """Run the command-line interface."""
-    pass
+    parser = argparse.ArgumentParser(
+        description="Find the most common words in a .txt file."
+    )
+    parser.add_argument("input_file", help="Path to the source .txt file.")
+    parser.add_argument("output_file", help="Path for the result file.")
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=10,
+        help="Number of the most common words to save.",
+    )
+    parsed_args = parser.parse_args(args)
+
+    process_text_file(
+        parsed_args.input_file,
+        parsed_args.output_file,
+        parsed_args.limit,
+    )
 
 
 if __name__ == "__main__":
