@@ -1,4 +1,4 @@
-name: CI
+name: Безперервна інтеграція
 
 on:
   push:
@@ -9,19 +9,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Завантаження репозиторію
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Налаштування Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install dependencies
+      - name: Встановлення залежностей
         run: pip install -r requirements.txt
 
-      - name: Check PEP8 with flake8
+      - name: Перевірка PEP8 через flake8
         run: flake8 .
 
-      - name: Run tests
+      - name: Запуск тестів
         run: pytest --html=report.html --self-contained-html
